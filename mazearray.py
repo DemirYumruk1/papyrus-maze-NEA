@@ -4,7 +4,7 @@ class MazeArray:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        
+
         self.grid = [[0 for x in range(self.width)] for y in range(self.height)]
 
 
@@ -20,7 +20,8 @@ class MazeArray:
             "BLUE_ELEC": 8 #blue tiles next to yellow tiles will be converted to this tile, do not generate
         }
 
-    def generateMaze():
+    def generateMaze(self):
         pass
-    def generatePath():
+    def generatePath(self):
+        start_y = (self.height)/2
         pass
