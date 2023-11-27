@@ -1,12 +1,11 @@
-        
+import random      
 class MazeArray:
 
-    def __init__(self, width, height):
+    def __init__(self, width, height, seed):
         self.width = width
         self.height = height
-
+        self.seed = seed
         self.grid = [[0 for x in range(self.width)] for y in range(self.height)]
-
 
         self.tile_id = {
             "GOAL": 0, #tile used to mark end of maze, do not generate
@@ -23,5 +22,10 @@ class MazeArray:
     def generateMaze(self):
         pass
     def generatePath(self):
-        start_y = (self.height)/2
-        pass
+        random.seed = self.seed
+        #start halfway down the maze, at x = 0. This is also where the player spawns
+        y = round(((self.height)/2))
+        x = 0
+        while x != self.width:
+            self.grid[x][y] = random.randint(1,5)
+            pass   
