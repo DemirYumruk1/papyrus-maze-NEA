@@ -28,4 +28,9 @@ class MazeArray:
         x = 0
         while x != self.width:
             self.grid[x][y] = random.randint(1,5)
+            #decide whether to change x or y
+            #pick a direction (+1 or -1)
+            #check if that tile is occupied (grid[x][y] != 0)
+            #if occupied, multiply direction by -1
+            
             pass   
