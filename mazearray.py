@@ -5,7 +5,7 @@ class MazeArray:
         self.width = width
         self.height = height
         self.seed = seed
-        self.grid = [[0 for x in range(self.width)] for y in range(self.height)]
+        self.grid = [["#" for x in range(self.width)] for y in range(self.height)]
 
         self.tile_id = {
             "GOAL": 0, #tile used to mark end of maze, do not generate
@@ -23,14 +23,38 @@ class MazeArray:
         pass
     def generatePath(self):
         random.seed = self.seed
-        #start halfway down the maze, at x = 0. This is also where the player spawns
+        #start halfway down the maze, at x = 0, because it is player spawn point
         y = round(((self.height)/2))
-        x = 0
-        while x != self.width:
+        x = 1
+        print(x)
+        print(y)
+        while x != (self.width + 1): #+1 is because the loop should terminate after the last tile is filled
+            direction = 0
             self.grid[x][y] = random.randint(1,5)
-            #decide whether to change x or y
-            #pick a direction (+1 or -1)
+            axis = random.choice(["x", "x", "y"])   #2/3 chance of changing x
+            print(axis)
+            if axis == "x":
+                direction = random.choice([-1, -1, 1, 1, 1])    #weighting the algorithm to the right to be less prone to walking into itself
+                if x == 0:
+                    direction = 1
+                if self.grid[x][y] != 0:
+                    x += direction
+                else:
+                    direction *= -1
+                    x += direction
+                print(x)
+            if axis == "y":
+                direction = random.choice([-1, 1])
+                if y == self.height:
+                    direction = -1
+                if y == 0:
+                    direction = 1
+                y += direction
+                print(y)
             #check if that tile is occupied (grid[x][y] != 0)
             #if occupied, multiply direction by -1
-            
-            pass   
+
+if __name__ == "__main__":
+    maze = MazeArray(10,10,100) #test case
+    maze.generatePath()
+    print(maze.grid)
