@@ -1,6 +1,6 @@
 import random      
 class MazeArray:
-
+#TODO: sin() function path generation.
     def __init__(self, width, height, seed):
         self.width = width
         self.height = height
