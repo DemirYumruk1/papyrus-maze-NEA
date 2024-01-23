@@ -35,7 +35,7 @@ class MazeArray:
         if safe:
             return random.choices(range(1,6))
         else:
-            return random.choices(range(1,8), weights=(0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3)) 
+            return random.choices(range(1,8), weights=(0.1, 0.1, 0.15, 0.15, 0.15, 0.2, 0.2)) 
         #red/yellow is 3x more likely with "unsafe" generation, this is because red/yellow tiles are not generated during path generation.
 
     def generatePath(self):
