@@ -43,7 +43,8 @@ def startInstance():
 
     if width >= 2 and height >= 2: #Width and height should be atleast 2 before creating an instance.
         instance = Game(width, height, seed)
-        return(instance)
+        instance.run_game_loop()
+        return
 
 #Create labels and names for text fields
 width_label = tk.Label(root, text = "ENTER WIDTH", fg="white", bg="black", font=("papyrus", 10, "bold"))
@@ -77,5 +78,3 @@ root.mainloop()
 
 if __name__ == "__main__":
     instance = startInstance()
-    root.destroy()
-    instance.run_game_loop()

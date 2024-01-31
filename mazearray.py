@@ -7,17 +7,14 @@ class MazeArray:
         self.seed = seed
         self.grid = [["#" for x in range(self.width)] for y in range(self.height)]
 
-        self.tile_id = {
-            "GOAL": 0, #tile used to mark end of maze, do not generate
-            "PINK": 1,
-            "BLUE": 2,
-            "GREEN": 3,
-            "ORANGE": 4,
-            "PURPLE": 5,
-            "RED": 6,
-            "YELLOW": 7,
-            "BLUE_ELEC": 8 #blue tiles next to yellow tiles will be converted to this tile, do not generate
-        }
+    def getWidth(self):
+        return self.width
+    
+    def getHeight(self):
+        return self.height
+    
+    def getGrid(self):
+        return self.grid
 
     def fillMaze(self):
         for x in range(len(self.grid)):
@@ -75,9 +72,9 @@ class MazeArray:
             #note: algorithm seems to start from coordinates (x,0) [somewhere from the bottom]  instead of (0,y/2) [halfway down, at the first column] for reasons i cannot decipher. 
             #This algorithm only exists to generate test cases so fixing this is low-priority
 
-if __name__ == "__main__": #used for testing
-    maze = MazeArray(10,10,255) 
-    maze.generatePath()
-    maze.fillMaze()
-    for row in maze.grid:
-        print(*row, sep="\t")
+#if __name__ == "__main__": #used for testing
+#    maze = MazeArray(10,10,255) 
+#    maze.generatePath()
+#    maze.fillMaze()
+#    for row in maze.grid:
+#        print(*row, sep="\t")
