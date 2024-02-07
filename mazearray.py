@@ -6,6 +6,7 @@ class MazeArray:
         self.height = height
         self.seed = seed
         self.grid = [["#" for x in range(self.width)] for y in range(self.height)]
+        self.solpath = []
 
     def getWidth(self):
         return self.width
@@ -24,10 +25,7 @@ class MazeArray:
                     #newtile = triangularly distributed number idk
                     #self.setTile(i, j, newtile)
                     pass
-        self.grid = [x + [[0]] for x in self.grid] 
-        #force 0 to generate as an array. this is because all the other numbers generate as lists. 
-        #the reason for this is unknown however it doesn't affect much so i'd rather not spend 10 hours fixing this behaviour i only have about a month to get this done
-        
+
     def setTile(self, x, y, input):
         self.grid[x][y] = input
 
@@ -49,7 +47,9 @@ class MazeArray:
             direction = 0
             #print(x)
             #print(y)
-            self.setTile(x, y, self.chooseTile(True))
+            chosenTile = self.chooseTile(True)
+            self.setTile(x, y, chosenTile)
+            self.solpath.append([x, y, chosenTile])
             axis = random.choice(["x", "x", "y"])   #2/3 chance of changing x
             #print(axis)
             if axis == "x":
@@ -70,6 +70,8 @@ class MazeArray:
                     direction = 1
                 y += direction
                 #print(y)
+            
+            
             #check if that tile is occupied (grid[x][y] != 0)
             #if occupied, multiply direction by -1
             #note: algorithm seems to start from coordinates (x,0) [somewhere from the bottom]  instead of (0,y/2) [halfway down, at the first column] for reasons i cannot decipher. 
@@ -81,3 +83,4 @@ if __name__ == "__main__": #used for testing
     maze.fillMaze()
     for row in maze.grid:
         print(*row, sep="\t")
+    print(maze.solpath)
