@@ -6,6 +6,7 @@ class MazeArray:
         self.height = height
         self.seed = seed
         self.grid = [["#" for x in range(self.width)] for y in range(self.height)]
+        self.solpath = []
 
     def getWidth(self):
         return self.width
@@ -67,14 +68,17 @@ class MazeArray:
                     direction = 1
                 y += direction
                 #print(y)
+            self.solpath.append([x, y])
+            
             #check if that tile is occupied (grid[x][y] != 0)
             #if occupied, multiply direction by -1
             #note: algorithm seems to start from coordinates (x,0) [somewhere from the bottom]  instead of (0,y/2) [halfway down, at the first column] for reasons i cannot decipher. 
             #This algorithm only exists to generate test cases so fixing this is low-priority
 
-#if __name__ == "__main__": #used for testing
-#    maze = MazeArray(10,10,255) 
-#    maze.generatePath()
-#    maze.fillMaze()
-#    for row in maze.grid:
-#        print(*row, sep="\t")
+if __name__ == "__main__": #used for testing
+    maze = MazeArray(10,10,255) 
+    maze.generatePath()
+    maze.fillMaze()
+    for row in maze.grid:
+        print(*row, sep="\t")
+    print(maze.solpath)
