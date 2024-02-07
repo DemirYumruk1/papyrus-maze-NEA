@@ -1,23 +1,20 @@
 import random      
 class MazeArray:
-#TODO: sin() function path generation.
+
     def __init__(self, width, height, seed):
         self.width = width
         self.height = height
         self.seed = seed
         self.grid = [["#" for x in range(self.width)] for y in range(self.height)]
 
-        self.tile_id = {
-            "GOAL": 0, #tile used to mark end of maze, do not generate
-            "PINK": 1,
-            "BLUE": 2,
-            "GREEN": 3,
-            "ORANGE": 4,
-            "PURPLE": 5,
-            "RED": 6,
-            "YELLOW": 7,
-            "BLUE_ELEC": 8 #blue tiles next to yellow tiles will be converted to this tile, do not generate
-        }
+    def getWidth(self):
+        return self.width
+    
+    def getHeight(self):
+        return self.height
+    
+    def getGrid(self):
+        return self.grid
 
     def fillMaze(self):
         for x in range(len(self.grid)):
@@ -27,7 +24,10 @@ class MazeArray:
                     #newtile = triangularly distributed number idk
                     #self.setTile(i, j, newtile)
                     pass
-
+        self.grid = [x + [[0]] for x in self.grid] 
+        #force 0 to generate as an array. this is because all the other numbers generate as lists. 
+        #the reason for this is unknown however it doesn't affect much so i'd rather not spend 10 hours fixing this behaviour i only have about a month to get this done
+        
     def setTile(self, x, y, input):
         self.grid[x][y] = input
 
@@ -35,7 +35,7 @@ class MazeArray:
         if safe:
             return random.choices(range(1,6))
         else:
-            return random.choices(range(1,8), weights=(0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.3)) 
+            return random.choices(range(1,8), weights=(0.1, 0.1, 0.15, 0.15, 0.15, 0.2, 0.2)) 
         #red/yellow is 3x more likely with "unsafe" generation, this is because red/yellow tiles are not generated during path generation.
 
     def generatePath(self):
