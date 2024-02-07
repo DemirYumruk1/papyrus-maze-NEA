@@ -47,7 +47,9 @@ class MazeArray:
             direction = 0
             #print(x)
             #print(y)
-            self.setTile(x, y, self.chooseTile(True))
+            chosenTile = self.chooseTile(True)
+            self.setTile(x, y, chosenTile)
+            self.solpath.append([x, y, chosenTile])
             axis = random.choice(["x", "x", "y"])   #2/3 chance of changing x
             #print(axis)
             if axis == "x":
@@ -68,7 +70,7 @@ class MazeArray:
                     direction = 1
                 y += direction
                 #print(y)
-            self.solpath.append([x, y])
+            
             
             #check if that tile is occupied (grid[x][y] != 0)
             #if occupied, multiply direction by -1
