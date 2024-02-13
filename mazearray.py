@@ -22,9 +22,8 @@ class MazeArray:
             for y in range(len(self.grid[x])):
                 if self.grid[x][y] == "#":
                     self.grid[x][y] = self.chooseTile(False)
-                    #newtile = triangularly distributed number idk
-                    #self.setTile(i, j, newtile)
-                    pass
+        for row in self.grid:
+            row.append([0])
 
     def setTile(self, x, y, input):
         self.grid[x][y] = input
