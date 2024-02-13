@@ -78,12 +78,11 @@ class Game:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         player_direction_x = 0
             #execute logic
+                        
             self.Player.move(player_direction_y, player_direction_x, self.maze_height, self.maze_width)
-            print(self.Player.getXpos())
-            print(self.Player.getYpos())
             #update display
             self.draw()
-            clock.tick(60)
+            clock.tick(10)
 
 if __name__ == "__main__":
     game = Game(10,10,255)
