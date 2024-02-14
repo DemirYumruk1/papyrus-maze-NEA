@@ -5,7 +5,7 @@ class Game:
     def __init__(self, maze_width, maze_height, seed):
         self.seed = seed
         self.maze = MazeArray(maze_width, maze_height, seed)
-        self.maze_width = maze_width
+        self.maze_width = maze_width + 1 #room for the goal tiles
         self.maze_height = maze_height
         self.mazeArray = self.maze.getGrid()
         self.tile_id = {
@@ -19,20 +19,17 @@ class Game:
             7: "YELLOW",
             8: "BLUE_ELEC" #blue tiles next to yellow tiles will be converted to this tile, do not generate
         }
-        #tiles are 16x16 so the window must be 16 times the amount of tiles to display them all
-        self.window_width = maze_width * 16
-        self.window_height = maze_height * 16
+ 
 
-        self.tile_width = 16 #only need width, the tiles are square
-
+        self.tile_width = 32 #only need width, the tiles are square
+        #tiles are 32x32 so the window must be 32 times the amount of tiles to display them all
+        self.window_width = maze_width * self.tile_width
+        self.window_height = maze_height * self.tile_width
         #game window size must be based on tiles
         self.game_window = pygame.display.set_mode((self.window_width,self.window_height))
 
         #the player's sprite must also be proportional to the tile size
         self.Player = Player(0, maze_height/2, "Assets/player_normal.png", self.tile_width, False)
-
-
-
 
     def draw(self):
         self.game_window.fill(0) #refresh screen
@@ -78,8 +75,8 @@ class Game:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         player_direction_x = 0
             #execute logic
-                        
-            self.Player.move(player_direction_y, player_direction_x, self.maze_height, self.maze_width)
+            
+            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
             #update display
             self.draw()
             clock.tick(10)

@@ -37,6 +37,9 @@ class Player:
     
     def getYpos(self):
         return self.y
+    
+    def getXY(self):
+        return[self.x][self.y]
 
     def setSprite(self, sprite_path):
         sprite = pygame.image.load(sprite_path)
