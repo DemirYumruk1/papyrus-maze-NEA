@@ -8,7 +8,7 @@ import os
 root = tk.Tk()
 root.title("Launcher")
 root.configure(bg="black")
-root.geometry("600x400")
+root.geometry("500x250")
 papyrus_netural = ImageTk.PhotoImage(Image.open("Assets/neutral.png"))
 
 #declaring variables to store values input by user
