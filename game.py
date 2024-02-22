@@ -44,6 +44,16 @@ class Game:
         
         pygame.display.update()
 
+    def check_tile(self, dir_x, dir_y):
+        current_x = self.Player.getXpos()
+        current_y = self.Player.getYpos()
+        next_tile = self.mazeArray[current_x + dir_x][current_y + dir_y]
+        print(current_x + " current x")
+        print(current_y + " current y")
+        print(dir_x + " dir x")
+        print(dir_y + " dir y")
+        return next_tile
+
     def run_game_loop(self):
         #initialise game
         pygame.init()
@@ -53,10 +63,13 @@ class Game:
         self.maze.fillMaze()
         player_direction_x = 0
         player_direction_y = 0
+        next_tile = 0
         #main loop
         while True:
             #handle events
             events = pygame.event.get()
+            player_direction_x = 0
+            player_direction_y = 0
             for event in events:
                 if event.type == pygame.QUIT:
                     return
@@ -75,8 +88,13 @@ class Game:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         player_direction_x = 0
             #execute logic
-            
-            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
+            try:
+                next_tile = self.check_tile(player_direction_x, player_direction_y)
+                print(self.check_tile(player_direction_x, player_direction_y)) #testing
+            except:
+                pass
+            if next_tile != [6] or [7]:
+                self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
             #update display
             self.draw()
             clock.tick(10)

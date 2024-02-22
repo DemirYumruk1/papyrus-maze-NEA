@@ -33,10 +33,10 @@ class Player:
         return self.flavour
     
     def getXpos(self):
-        return self.x
+        return int(self.x)
     
     def getYpos(self):
-        return self.y
+        return int(self.y)
     
     def getXY(self):
         return[self.x][self.y]
