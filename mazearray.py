@@ -24,10 +24,15 @@ class MazeArray:
                     self.grid[x][y] = self.chooseTile(False)
                     #newtile = triangularly distributed number idk
                     #self.setTile(i, j, newtile)
-                    pass
+        self.grid = [x + [[0]] for x in self.grid] 
+        #force 0 to generate as an array. this is because all the other numbers generate as lists. 
+        #the reason for this is unknown however it doesn't affect much so i'd rather not spend 10 hours fixing this behaviour i only have about a month to get this done
 
     def setTile(self, x, y, input):
         self.grid[x][y] = input
+
+    def getTile(self, x, y):
+        return self.grid[x][y]
 
     def chooseTile(self, safe):
         if safe:
@@ -38,6 +43,8 @@ class MazeArray:
 
     def generatePath(self):
         random.seed = self.seed
+        lastTile = 0 #need to keep track of last tile. 
+        #If a purple was placed, direction must be the same for one tile. If an orange tile was placed, do not use blue until purple is placed.
         #start halfway down the maze, at x = 0, because it is player spawn point
         y = round(((self.height)/2))
         x = 1
