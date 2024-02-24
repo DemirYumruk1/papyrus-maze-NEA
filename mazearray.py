@@ -32,7 +32,8 @@ class MazeArray:
         self.grid[x][y] = input
 
     def getTile(self, x, y):
-        return self.grid[x][y]
+        print(self.grid[y][x])
+        return self.grid[y][x]
 
     def chooseTile(self, safe):
         if safe:

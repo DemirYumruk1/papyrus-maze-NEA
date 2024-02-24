@@ -47,15 +47,18 @@ class Game:
     def check_tile(self, dir_x, dir_y):
         current_x = self.Player.getXpos()
         current_y = self.Player.getYpos()
-        #test
+        next_x = current_x + dir_x
+        next_y = current_y + dir_y
+        next_tile = self.maze.getTile(next_x, next_y)
+        #test statements
         print("current x: ")
         print(current_x)
         print("current y:")
         print(current_y)
-        #test over
-        next_x = current_x + dir_x
-        next_y = current_y + dir_y
-        next_tile = self.mazeArray.getTile(next_x, next_y)
+        print("next x: ")
+        print(next_x)
+        print("next y: ")
+        print(next_y)
         return next_tile
 
     def run_game_loop(self):
@@ -97,7 +100,7 @@ class Game:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         player_direction_x = 0
             #execute logic
-            #self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
             
             #update display
             self.draw()
