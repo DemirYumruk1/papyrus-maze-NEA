@@ -31,6 +31,9 @@ class MazeArray:
     def setTile(self, x, y, input):
         self.grid[x][y] = input
 
+    def getTile(self, x, y):
+        return self.grid[x][y]
+
     def chooseTile(self, safe):
         if safe:
             return random.choices(range(1,6))
@@ -40,6 +43,8 @@ class MazeArray:
 
     def generatePath(self):
         random.seed = self.seed
+        lastTile = 0 #need to keep track of last tile. 
+        #If a purple was placed, direction must be the same for one tile. If an orange tile was placed, do not use blue until purple is placed.
         #start halfway down the maze, at x = 0, because it is player spawn point
         y = round(((self.height)/2))
         x = 1
