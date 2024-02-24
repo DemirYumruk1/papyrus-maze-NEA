@@ -8,7 +8,8 @@ class Player:
         self.sprite = pygame.transform.scale(sprite, (sprite_width, sprite_width))
         self.flavour = flavour
 
-    def move(self, direction_y, direction_x, max_y, max_x):
+    def move(self, direction_y, direction_x, max_y, max_x, next_tile):
+        print(next_tile)
         #Constrain movement
         if (self.y >= max_y):
             if direction_y == 1:

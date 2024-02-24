@@ -47,11 +47,15 @@ class Game:
     def check_tile(self, dir_x, dir_y):
         current_x = self.Player.getXpos()
         current_y = self.Player.getYpos()
-        next_tile = self.mazeArray[current_x + dir_x][current_y + dir_y]
-        print(current_x + " current x")
-        print(current_y + " current y")
-        print(dir_x + " dir x")
-        print(dir_y + " dir y")
+        #test
+        print("current x: ")
+        print(current_x)
+        print("current y:")
+        print(current_y)
+        #test over
+        next_x = current_x + dir_x
+        next_y = current_y + dir_y
+        next_tile = self.mazeArray.getTile(next_x, next_y)
         return next_tile
 
     def run_game_loop(self):
@@ -82,19 +86,19 @@ class Game:
                         player_direction_x = 1
                     elif event.key == pygame.K_LEFT:
                         player_direction_x = -1
+                    try:
+                        next_tile = self.check_tile(player_direction_x, player_direction_y)
+                        print(next_tile) #testing
+                    except:
+                        pass
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                         player_direction_y = 0
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         player_direction_x = 0
             #execute logic
-            try:
-                next_tile = self.check_tile(player_direction_x, player_direction_y)
-                print(self.check_tile(player_direction_x, player_direction_y)) #testing
-            except:
-                pass
-            if next_tile != [6] or [7]:
-                self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
+            #self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+            
             #update display
             self.draw()
             clock.tick(10)
@@ -102,3 +106,4 @@ class Game:
 if __name__ == "__main__":
     game = Game(10,10,255)
     game.run_game_loop()
+    print(game.mazeArray)
