@@ -71,6 +71,27 @@ class Game:
         player_direction_x = 0
         player_direction_y = 0
         next_tile = 0
+
+        def move(next_tile): 
+            #checking tiles then moving the player is a function call 
+            #purple tiles require checks to be performed twice. this will save me from copy pasting the same check twice.
+
+            if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8])): #check if next tile isn't electrified or red
+
+                if not(next_tile == [2] and self.Player.getFlavour()): #check if player smells like oranges and isn't crossing water if so
+
+                    if next_tile == [4]: #change flavour to orange when pressing orange tile
+                        self.Player.setFlavour(True)
+
+                    if next_tile == [5]:
+                        self.Player.setFlavour(False)
+                        self.Player.move(player_direction_y*2, player_direction_x*2, self.maze_height -1 , self.maze_width -1, next_tile)
+                    else:
+                        self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+
+                
+
+            
         #main loop
         while True:
             #handle events
@@ -89,19 +110,18 @@ class Game:
                         player_direction_x = 1
                     elif event.key == pygame.K_LEFT:
                         player_direction_x = -1
-                    try:
-                        next_tile = self.check_tile(player_direction_x, player_direction_y)
-                        print(next_tile) #testing
-                    except:
-                        pass
+
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                         player_direction_y = 0
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         player_direction_x = 0
             #execute logic
-            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
-            
+                try:
+                    next_tile = self.check_tile(player_direction_x, player_direction_y)
+                except:
+                    pass
+            move(next_tile)
             #update display
             self.draw()
             clock.tick(10)

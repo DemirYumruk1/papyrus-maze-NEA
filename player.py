@@ -27,6 +27,9 @@ class Player:
         self.y += direction_y
         self.x += direction_x
 
+    #note to self, flavour is a boolean to save memory (a string/int/float would take more memory)
+    #this also helps with the if statement for checking water collision when orange flavour is on
+    #orange = True, lemon = False.
     def setFlavour(self, flavour):
         self.flavour = flavour
 
