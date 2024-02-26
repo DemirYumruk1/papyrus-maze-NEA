@@ -52,15 +52,6 @@ class Game:
         next_x = current_x + dir_x
         next_y = current_y + dir_y
         next_tile = self.maze.getTile(next_x, next_y)
-        #test statements
-        print("current x: ")
-        print(current_x)
-        print("current y:")
-        print(current_y)
-        print("next x: ")
-        print(next_x)
-        print("next y: ")
-        print(next_y)
         return next_tile
 
     def run_game_loop(self):
@@ -83,7 +74,7 @@ class Game:
                 if not(next_tile == [2] and self.Player.getFlavour()): #check if player smells like oranges and isn't crossing water if so
 
                     #if these two checks are passed, then the player can move.
-                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
 
                     if next_tile == [4]: #change flavour to orange when pressing orange tile
                         self.Player.setFlavour(True)
@@ -96,12 +87,12 @@ class Game:
                         while next_tile == [5]: #while loop is because multiple purples may be in a row, we want the player to slide across all.
                             next_tile = self.check_tile(player_direction_x, player_direction_y) #check next tile to see if it's purple again
                             if (next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]):
-                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1, next_tile)
+                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1)
                                 break
                             if next_tile == [2] and self.Player.getFlavour():
-                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1, next_tile)
+                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1)
                                 break
-                            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+                            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
                                     
                         
             
@@ -137,7 +128,7 @@ class Game:
                 except:
                     pass
             move(next_tile)
-            if self.Player.getXpos == self.maze_width - 1:
+            if next_tile == [0]:
                 #complete game, save any achievement data earned
                 return
             #update display
