@@ -31,6 +31,8 @@ class Game:
         #the player's sprite must also be proportional to the tile size
         self.Player = Player(0, maze_height/2, "Assets/player_normal.png", self.tile_width, False)
 
+        self.score = 0 #goes up every time a green tile is pressed
+
     def draw(self):
         self.game_window.fill(0) #refresh screen
         player_displayed_pos_x = self.Player.x * self.tile_width
@@ -80,19 +82,26 @@ class Game:
 
                 if not(next_tile == [2] and self.Player.getFlavour()): #check if player smells like oranges and isn't crossing water if so
 
+                    #if these two checks are passed, then the player can move.
+                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+
                     if next_tile == [4]: #change flavour to orange when pressing orange tile
                         self.Player.setFlavour(True)
 
-                    if next_tile == [5]:
+                    elif next_tile == [3]:
+                        self.score += 1
+
+                    elif next_tile == [5]:
                         self.Player.setFlavour(False)
-                        self.Player.move(player_direction_y*2, player_direction_x*2, self.maze_height -1 , self.maze_width -1, next_tile)
-                    else:
-                        self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
-
-                
-
+                        while next_tile == [5]: #while loop is because multiple purples may be in a row, we want the player to slide across all.
+                            next_tile = self.check_tile(player_direction_x, player_direction_y) #check next tile to see if it's purple again
+                            if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8])):
+                                if not(next_tile == [2] and self.Player.getFlavour()):
+                                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+                                    
+                        
             
-        #main loop
+        #main loops
         while True:
             #handle events
             events = pygame.event.get()
