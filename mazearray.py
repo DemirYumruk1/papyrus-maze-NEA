@@ -20,8 +20,8 @@ class MazeArray:
     def fillMaze(self):
         for x in range(len(self.grid)):
             for y in range(len(self.grid[x])):
-                if self.grid[x][y] == "#":
-                    self.grid[x][y] = self.chooseTile(False)
+                if self.grid[y][x] == "#":
+                    self.grid[y][x] = self.chooseTile(False)
                     #newtile = triangularly distributed number idk
                     #self.setTile(i, j, newtile)
         self.grid = [x + [[0]] for x in self.grid] 
@@ -29,7 +29,7 @@ class MazeArray:
         #the reason for this is unknown however it doesn't affect much so i'd rather not spend 10 hours fixing this behaviour i only have about a month to get this done
 
     def setTile(self, x, y, input):
-        self.grid[x][y] = input
+        self.grid[y][x] = input
 
     def getTile(self, x, y):
         print(self.grid[y][x])
@@ -64,7 +64,7 @@ class MazeArray:
                 direction = random.choice([-1, -1, 1, 1, 1])    #weighting the algorithm to the right to be less prone to walking into itself
                 if x == 0:
                     direction = 1
-                if self.grid[x][y] != 0:
+                if self.grid[y][x] != 0:
                     x += direction
                 else:
                     direction *= -1

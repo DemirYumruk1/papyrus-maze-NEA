@@ -129,12 +129,17 @@ class Game:
                         player_direction_y = 0
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                         player_direction_x = 0
+
             #execute logic
+            #attempt to get the next tile, if no tile exists then pass to avoid crashing
                 try:
                     next_tile = self.check_tile(player_direction_x, player_direction_y)
                 except:
                     pass
             move(next_tile)
+            if self.Player.getXpos == self.maze_width - 1:
+                #complete game, save any achievement data earned
+                return
             #update display
             self.draw()
             clock.tick(10)
