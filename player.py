@@ -8,7 +8,8 @@ class Player:
         self.sprite = pygame.transform.scale(sprite, (sprite_width, sprite_width))
         self.flavour = flavour
 
-    def move(self, direction_y, direction_x, max_y, max_x):
+    def move(self, direction_y, direction_x, max_y, max_x, next_tile):
+        print(next_tile)
         #Constrain movement
         if (self.y >= max_y):
             if direction_y == 1:
@@ -26,6 +27,9 @@ class Player:
         self.y += direction_y
         self.x += direction_x
 
+    #note to self, flavour is a boolean to save memory (a string/int/float would take more memory)
+    #this also helps with the if statement for checking water collision when orange flavour is on
+    #orange = True, lemon = False.
     def setFlavour(self, flavour):
         self.flavour = flavour
 
@@ -33,10 +37,13 @@ class Player:
         return self.flavour
     
     def getXpos(self):
-        return self.x
+        return int(self.x)
     
     def getYpos(self):
-        return self.y
+        return int(self.y)
+    
+    def getXY(self):
+        return[self.x][self.y]
 
     def setSprite(self, sprite_path):
         sprite = pygame.image.load(sprite_path)
