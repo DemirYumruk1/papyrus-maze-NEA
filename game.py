@@ -95,9 +95,13 @@ class Game:
                         self.Player.setFlavour(False)
                         while next_tile == [5]: #while loop is because multiple purples may be in a row, we want the player to slide across all.
                             next_tile = self.check_tile(player_direction_x, player_direction_y) #check next tile to see if it's purple again
-                            if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8])):
-                                if not(next_tile == [2] and self.Player.getFlavour()):
-                                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
+                            if (next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]):
+                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1, next_tile)
+                                break
+                            if next_tile == [2] and self.Player.getFlavour():
+                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1, next_tile)
+                                break
+                            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1, next_tile)
                                     
                         
             
