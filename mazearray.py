@@ -47,11 +47,11 @@ class MazeArray:
         #If a purple was placed, direction must be the same for one tile. If an orange tile was placed, do not use blue until purple is placed.
         #start halfway down the maze, at x = 0, because it is player spawn point
         y = round(((self.height)/2))
-        x = 1
+        x = 0
         #print(x)
         #print(y)
-        chosenTile = [1]
         while x != (self.width): #+1 removed, thought it would end loop after filling, caused overflow, reverted
+            chosenTile = self.chooseTile(True) #pick a new tile
             direction = 0
             #print(x)
             #print(y)
@@ -77,17 +77,16 @@ class MazeArray:
                     direction = 1
                 y += direction
                 #print(y)
-            
-            chosenTile = self.chooseTile(True) #choose new tile after placing down
+
+
+        #place a pink tile at player spawn, AFTER path generation
+        maze.setTile(0, round(((self.height)/2)), [1])
+
 
 if __name__ == "__main__": #used for testing
     maze = MazeArray(4,4,255) 
     maze.generatePath()
     maze.fillMaze()
-    for row in maze.grid:
-        print(*row, sep="\t")
-    maze.setTile(0,2,[1])
-    print("\n \n")
     for row in maze.grid:
         print(*row, sep="\t")
     print(maze.solpath)
