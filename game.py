@@ -68,9 +68,7 @@ class Game:
         onGreen = False
 
         def move(next_tile):
-            #checking tiles then moving the player is a function call 
-
-            #purple tiles require checks to be performed twice. this will save me from copy pasting the same check twice.
+############################################################################################################################################
             def slip(player_direction_y, player_direction_x):
                 self.Player.setFlavour(False)
                 next_tile = self.check_tile(player_direction_x, player_direction_y)
@@ -88,9 +86,8 @@ class Game:
                     if not ((player_direction_x, player_direction_y) == (0, 0)):
                         slip(player_direction_y, player_direction_x)
                         next_tile = self.check_tile(player_direction_x, player_direction_y) #check next tile to see if it's purple again                
-            
+###############################################################################################################################################
             if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8])): #check if next tile isn't electrified or red
-
                 if not(next_tile == [2] and self.Player.getFlavour()): #check if player smells like oranges and isn't crossing water if so
                     #if these two checks are passed, then the player can move.
                     self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
@@ -100,9 +97,6 @@ class Game:
 
                     elif next_tile == [5]:
                         slip(player_direction_y, player_direction_x)
-                        
-                                    
-                        
             
         #main loops
         while True:
@@ -123,7 +117,7 @@ class Game:
                         player_direction_y = -1
                     elif event.key == pygame.K_DOWN:
                         player_direction_y = 1
-                    elif event.key == pygame.K_RIGHT: #replacing "if" with "elif" disabled diagonals
+                    elif event.key == pygame.K_RIGHT:
                         player_direction_x = 1
                     elif event.key == pygame.K_LEFT:
                         player_direction_x = -1
