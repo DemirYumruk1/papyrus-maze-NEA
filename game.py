@@ -29,7 +29,7 @@ class Game:
         self.game_window = pygame.display.set_mode((self.window_width,self.window_height))
 
         #the player's sprite must also be proportional to the tile size
-        self.Player = Player(0, maze_height/2, "Assets/player_normal.png", self.tile_width, False)
+        self.Player = Player(0, round(maze_height/2), "Assets/player_normal.png", self.tile_width, False)
 
         self.score = 0 #goes up every time a green tile is pressed
 
@@ -37,6 +37,7 @@ class Game:
         self.game_window.fill(0) #refresh screen
         player_displayed_pos_x = self.Player.x * self.tile_width
         player_displayed_pos_y = self.Player.y * self.tile_width
+
         for j, row in enumerate(self.mazeArray):
             for i, tile in enumerate(row):
                 colour = self.tile_id[tile[0]] #tile[0], because the tile itself contains a list ([1] instead of 1)
@@ -84,11 +85,11 @@ class Game:
                         self.Player.setFlavour(False)
                         next_tile = self.check_tile(player_direction_x_local, player_direction_y_local) #check next tile to see if it's purple again
                         if (next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]):
-                            player_direction_x_local *= -1
-                            player_direction_y_local *= -1
+                            player_direction_x_local *= 0
+                            player_direction_y_local *= 0
                         if next_tile == [2] and self.Player.getFlavour():
-                            player_direction_x_local *= -1
-                            player_direction_y_local *= -1
+                            player_direction_x_local *= 0
+                            player_direction_y_local *= 0
                         self.Player.move(player_direction_y_local, player_direction_x_local, self.maze_height -1 , self.maze_width -1)
                                     
                         
@@ -151,6 +152,6 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(6,6,255)
+    game = Game(5,5,255)
     game.run_game_loop()
     print(game.mazeArray)
