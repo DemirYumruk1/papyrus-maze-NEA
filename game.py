@@ -96,7 +96,12 @@ class Game:
         #main loops
         while True:
             #handle events
+
+            #disable mouse inputs, as they cause green tiles to trigger
+            pygame.event.set_blocked(pygame.MOUSEBUTTONDOWN)
+            pygame.event.set_blocked(pygame.MOUSEMOTION)
             events = pygame.event.get()
+            
             player_direction_x = 0
             player_direction_y = 0
             for event in events:
@@ -107,7 +112,7 @@ class Game:
                         player_direction_y = -1
                     elif event.key == pygame.K_DOWN:
                         player_direction_y = 1
-                    if event.key == pygame.K_RIGHT:
+                    elif event.key == pygame.K_RIGHT: #replacing "if" with "elif" disabled diagonals
                         player_direction_x = 1
                     elif event.key == pygame.K_LEFT:
                         player_direction_x = -1

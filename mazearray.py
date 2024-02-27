@@ -80,7 +80,7 @@ class MazeArray:
 
 
         #place a pink tile at player spawn, AFTER path generation
-        maze.setTile(0, round(((self.height)/2)), [1])
+        self.setTile(0, round(((self.height)/2)), [1])
 
 
 if __name__ == "__main__": #used for testing
