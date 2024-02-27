@@ -68,29 +68,39 @@ class Game:
         onGreen = False
 
         def move(next_tile):
-            player_direction_x_local = player_direction_x
-            player_direction_y_local = player_direction_y
             #checking tiles then moving the player is a function call 
+
             #purple tiles require checks to be performed twice. this will save me from copy pasting the same check twice.
+            def slip(player_direction_y, player_direction_x):
+                self.Player.setFlavour(False)
+                next_tile = self.check_tile(player_direction_x, player_direction_y)
+
+                #prevent illegal movement
+                if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]) or (next_tile == [2] and self.Player.getFlavour())):
+                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
+
+                #exit slip physics if the end of the maze is found
+                if next_tile == [0]:
+                    return 
+
+                #move twice if tile ahead is purple (this caused me so much pain)
+                elif next_tile == [5]: 
+                    if not ((player_direction_x, player_direction_y) == (0, 0)):
+                        slip(player_direction_y, player_direction_x)
+                        next_tile = self.check_tile(player_direction_x, player_direction_y) #check next tile to see if it's purple again                
+            
             if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8])): #check if next tile isn't electrified or red
 
                 if not(next_tile == [2] and self.Player.getFlavour()): #check if player smells like oranges and isn't crossing water if so
                     #if these two checks are passed, then the player can move.
-                    self.Player.move(player_direction_y_local, player_direction_x_local, self.maze_height -1 , self.maze_width -1)
+                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
 
                     if next_tile == [4]: #change flavour to orange when pressing orange tile
                         self.Player.setFlavour(True)
 
                     elif next_tile == [5]:
-                        self.Player.setFlavour(False)
-                        next_tile = self.check_tile(player_direction_x_local, player_direction_y_local) #check next tile to see if it's purple again
-                        if (next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]):
-                            player_direction_x_local *= 0
-                            player_direction_y_local *= 0
-                        if next_tile == [2] and self.Player.getFlavour():
-                            player_direction_x_local *= 0
-                            player_direction_y_local *= 0
-                        self.Player.move(player_direction_y_local, player_direction_x_local, self.maze_height -1 , self.maze_width -1)
+                        slip(player_direction_y, player_direction_x)
+                        
                                     
                         
             
@@ -152,6 +162,6 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(5,5,255)
+    game = Game(10,10,255)
     game.run_game_loop()
     print(game.mazeArray)
