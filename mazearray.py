@@ -21,9 +21,7 @@ class MazeArray:
         for x in range(len(self.grid)):
             for y in range(len(self.grid[x])):
                 if self.grid[y][x] == "#":
-                    self.grid[y][x] = self.chooseTile(False)
-                    #newtile = triangularly distributed number idk
-                    #self.setTile(i, j, newtile)
+                    self.setTile(x, y, self.chooseTile(False))
         self.grid = [x + [[0]] for x in self.grid] 
         #force 0 to generate as an array. this is because all the other numbers generate as lists. 
         #the reason for this is unknown however it doesn't affect much so i'd rather not spend 10 hours fixing this behaviour i only have about a month to get this done
@@ -39,7 +37,8 @@ class MazeArray:
         if safe:
             return random.choices(range(1,6))
         else:
-            return random.choices(range(1,8), weights=(0.1, 0.1, 0.15, 0.15, 0.15, 0.2, 0.2)) 
+            #return random.choices(range(1,8), weights=(0.1, 0.1, 0.15, 0.15, 0.15, 0.2, 0.2))
+            return [6] 
         #red/yellow is 3x more likely with "unsafe" generation, this is because red/yellow tiles are not generated during path generation.
 
     def generatePath(self):
@@ -51,11 +50,11 @@ class MazeArray:
         x = 1
         #print(x)
         #print(y)
+        chosenTile = [1]
         while x != (self.width): #+1 removed, thought it would end loop after filling, caused overflow, reverted
             direction = 0
             #print(x)
             #print(y)
-            chosenTile = self.chooseTile(True)
             self.setTile(x, y, chosenTile)
             self.solpath.append([x, y, chosenTile])
             axis = random.choice(["x", "x", "y"])   #2/3 chance of changing x
@@ -72,23 +71,23 @@ class MazeArray:
                 #print(x)
             if axis == "y":
                 direction = random.choice([-1, 1])
-                if y == self.height:
+                if y == self.height -1:
                     direction = -1
                 if y == 0:
                     direction = 1
                 y += direction
                 #print(y)
             
-            
-            #check if that tile is occupied (grid[x][y] != 0)
-            #if occupied, multiply direction by -1
-            #note: algorithm seems to start from coordinates (x,0) [somewhere from the bottom]  instead of (0,y/2) [halfway down, at the first column] for reasons i cannot decipher. 
-            #This algorithm only exists to generate test cases so fixing this is low-priority
+            chosenTile = self.chooseTile(True) #choose new tile after placing down
 
 if __name__ == "__main__": #used for testing
-    maze = MazeArray(10,10,255) 
+    maze = MazeArray(4,4,255) 
     maze.generatePath()
     maze.fillMaze()
+    for row in maze.grid:
+        print(*row, sep="\t")
+    maze.setTile(2,2,[1])
+    print("\n \n")
     for row in maze.grid:
         print(*row, sep="\t")
     print(maze.solpath)

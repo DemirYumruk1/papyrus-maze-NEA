@@ -64,35 +64,32 @@ class Game:
         player_direction_x = 0
         player_direction_y = 0
         next_tile = 0
+        onGreen = False
 
-        def move(next_tile): 
+        def move(next_tile):
+            player_direction_x_local = player_direction_x
+            player_direction_y_local = player_direction_y
             #checking tiles then moving the player is a function call 
             #purple tiles require checks to be performed twice. this will save me from copy pasting the same check twice.
-
             if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8])): #check if next tile isn't electrified or red
 
                 if not(next_tile == [2] and self.Player.getFlavour()): #check if player smells like oranges and isn't crossing water if so
-
                     #if these two checks are passed, then the player can move.
-                    self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
+                    self.Player.move(player_direction_y_local, player_direction_x_local, self.maze_height -1 , self.maze_width -1)
 
                     if next_tile == [4]: #change flavour to orange when pressing orange tile
                         self.Player.setFlavour(True)
 
-                    elif next_tile == [3]:
-                        self.score += 1
-
                     elif next_tile == [5]:
                         self.Player.setFlavour(False)
-                        while next_tile == [5]: #while loop is because multiple purples may be in a row, we want the player to slide across all.
-                            next_tile = self.check_tile(player_direction_x, player_direction_y) #check next tile to see if it's purple again
-                            if (next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]):
-                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1)
-                                break
-                            if next_tile == [2] and self.Player.getFlavour():
-                                self.Player.move(player_direction_y*-1, player_direction_x*-1, self.maze_height -1 , self.maze_width -1)
-                                break
-                            self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
+                        next_tile = self.check_tile(player_direction_x_local, player_direction_y_local) #check next tile to see if it's purple again
+                        if (next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]):
+                            player_direction_x_local *= -1
+                            player_direction_y_local *= -1
+                        if next_tile == [2] and self.Player.getFlavour():
+                            player_direction_x_local *= -1
+                            player_direction_y_local *= -1
+                        self.Player.move(player_direction_y_local, player_direction_x_local, self.maze_height -1 , self.maze_width -1)
                                     
                         
             
@@ -114,7 +111,10 @@ class Game:
                         player_direction_x = 1
                     elif event.key == pygame.K_LEFT:
                         player_direction_x = -1
-
+                    try:
+                        next_tile = self.check_tile(player_direction_x, player_direction_y)
+                    except:
+                        pass
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                         player_direction_y = 0
@@ -123,19 +123,29 @@ class Game:
 
             #execute logic
             #attempt to get the next tile, if no tile exists then pass to avoid crashing
+                
                 try:
                     next_tile = self.check_tile(player_direction_x, player_direction_y)
                 except:
                     pass
             move(next_tile)
+            if (next_tile == [3]) and not (onGreen): #green tile score counter, outside move because onGreen needs to be stored
+                self.score += 1
+                print(self.score)
+                onGreen = True 
+            else:
+                onGreen = False
+
             if next_tile == [0]:
                 #complete game, save any achievement data earned
                 return
+            
+            next_tile = [1] #reset next tile
             #update display
             self.draw()
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(10,10,255)
+    game = Game(6,6,255)
     game.run_game_loop()
     print(game.mazeArray)
