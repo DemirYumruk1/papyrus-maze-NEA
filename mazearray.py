@@ -86,7 +86,7 @@ if __name__ == "__main__": #used for testing
     maze.fillMaze()
     for row in maze.grid:
         print(*row, sep="\t")
-    maze.setTile(2,2,[1])
+    maze.setTile(0,2,[1])
     print("\n \n")
     for row in maze.grid:
         print(*row, sep="\t")
