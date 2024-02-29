@@ -39,13 +39,13 @@ class MazeArray:
             #return[1]
         elif mode == "filling":
             return random.choices(range(1,8), weights=(0.1, 0.1, 0.1, 0.1, 0.15, 0.2, 0.2))
-            #return [6] 
+            #return ["#"]
         else:
             return random.choices([1, 3, 4, 5])
         #red/yellow is 3x more likely with "unsafe" generation, this is because red/yellow tiles are not generated during path generation.
 
     def generatePath(self):
-        random.seed = self.seed
+        random.seed(self.seed)
         lastTile = 0 #need to keep track of last tile. 
         stillOrange = False
         #If a purple was placed, direction must be the same for one tile. If an orange tile was placed, do not use blue until purple is placed.

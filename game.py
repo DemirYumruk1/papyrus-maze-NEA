@@ -1,4 +1,5 @@
 import pygame
+import time
 from mazearray import MazeArray
 from player import Player
 class Game:
@@ -163,7 +164,7 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(25,20,255)
+    game = Game(10,10,int(time.time()))
     game.run_game_loop()
     print(game.mazeArray)
 
