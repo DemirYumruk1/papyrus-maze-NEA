@@ -74,10 +74,13 @@ class Game:
         player_direction_x = 0
         player_direction_y = 0
         next_tile = 0
-        onGreen = False
+
+        #start BGM
+        pygame.mixer.init()
+        pygame.mixer.music.load("Assets/BGM.mp3")
+        pygame.mixer.music.play(-1)
 
         def move(next_tile):
-            onGreen = False
 ############################################################################################################################################
             def slip(player_direction_y, player_direction_x):
                 self.Player.setFlavour(False)
@@ -108,12 +111,10 @@ class Game:
                     elif next_tile == [5]:
                         slip(player_direction_y, player_direction_x)
                     
-                    if (next_tile == [3]) and not (onGreen): #green tile score counter, outside move because onGreen needs to be stored
+                    if (next_tile == [3]):
                         self.score += 1
                         print(self.score)
-                        onGreen = True 
-                    else:
-                        onGreen = False
+
 
         #main loops
         while True:
@@ -152,8 +153,6 @@ class Game:
             move(next_tile)
 
             if next_tile == [0]:
-                #complete game, save any achievement data earned
-                print("you are win")
                 return
             
             next_tile = [1] #reset next tile
@@ -164,7 +163,7 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(10,10,int(time.time()))
+    game = Game(25,25,int(time.time()))
     game.run_game_loop()
     print(game.mazeArray)
 
