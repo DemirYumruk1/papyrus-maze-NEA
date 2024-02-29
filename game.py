@@ -31,7 +31,7 @@ class Game:
         self.game_window = pygame.display.set_mode((self.window_width, self.window_height + 100)) #+100 gives headroom for GUI
 
         #the player's sprite must also be proportional to the tile size
-        self.Player = Player(0, round(maze_height/2), "Assets/player_normal.png", self.tile_width, False)
+        self.Player = Player(0, round(maze_height/2), "Assets/player_normal.png", self.tile_width)
 
         self.seconds = 0 #goes up every second (100 ticks)
         self.score = 0 #goes up every time a green tile is pressed
@@ -84,7 +84,10 @@ class Game:
 ############################################################################################################################################
             def slip(player_direction_y, player_direction_x):
                 self.Player.setFlavour(False)
-                next_tile = self.check_tile(player_direction_x, player_direction_y)
+                try:
+                    next_tile = self.check_tile(player_direction_x, player_direction_y)
+                except:
+                    next_tile = [6]
 
                 #prevent illegal movement
                 if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]) or (next_tile == [2] and self.Player.getFlavour())):
@@ -163,7 +166,7 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(25,25,int(time.time()))
+    game = Game(5,5, 123)
     game.run_game_loop()
     print(game.mazeArray)
 

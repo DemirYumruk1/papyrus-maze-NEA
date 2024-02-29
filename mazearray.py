@@ -30,7 +30,6 @@ class MazeArray:
         self.grid[y][x] = input
 
     def getTile(self, x, y):
-        print(self.grid[y][x])
         return self.grid[y][x]
 
     def chooseTile(self, mode):

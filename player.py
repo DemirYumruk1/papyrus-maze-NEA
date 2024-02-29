@@ -1,12 +1,12 @@
 import pygame
 class Player:
-    def __init__(self, x, y, sprite_path, sprite_width, flavour):
+    def __init__(self, x, y, sprite_path, sprite_width):
         self.x = x
         self.y = y
         sprite = pygame.image.load(sprite_path)
         self.sprite_width = sprite_width # only need width, sprite should be 1:1
         self.sprite = pygame.transform.scale(sprite, (sprite_width, sprite_width))
-        self.flavour = flavour
+        self.flavour = False
 
     def move(self, direction_y, direction_x, max_y, max_x):
         #Constrain movement
