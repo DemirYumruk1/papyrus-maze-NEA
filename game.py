@@ -71,6 +71,7 @@ class Game:
         clock = pygame.time.Clock()
         self.maze.generatePath()
         self.maze.fillMaze()
+        self.maze.electricBlue()
         player_direction_x = 0
         player_direction_y = 0
         next_tile = 0
@@ -144,6 +145,7 @@ class Game:
                         player_direction_x = -1
                     try: #only need to check next tile when a key is pressed
                         next_tile = self.check_tile(player_direction_x, player_direction_y)
+                        print(next_tile)
                     except:
                         pass
                 elif event.type == pygame.KEYUP:
@@ -154,8 +156,8 @@ class Game:
 
             #execute logic
             move(next_tile)
-
-            if next_tile == [0]:
+            
+            if next_tile == [0] and self.Player.getXpos() != 0:
                 return
             
             next_tile = [1] #reset next tile
@@ -166,7 +168,7 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(5,5, 123)
+    game = Game(4, 4, 248342)
     game.run_game_loop()
     print(game.mazeArray)
 

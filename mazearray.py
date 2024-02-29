@@ -1,4 +1,5 @@
-import random      
+import random    
+import time  
 class MazeArray:
 
     def __init__(self, width, height, seed):
@@ -91,11 +92,31 @@ class MazeArray:
         #place a pink tile at player spawn, AFTER path generation
         self.setTile(0, round(((self.height)/2)), [1])
 
+    def electricBlue(self):
+        for y in range(len(self.grid)):
+            for x in range(len(self.grid[y])):
+                if self.grid[y][x] == [2]:
+                        if x != self.width:
+                            if (self.getTile(x + 1, y) == [7]):
+                                self.setTile(x, y, [8])
+                        if x != 0:
+                            if (self.getTile(x - 1, y) == [7]):
+                                self.setTile(x, y, [8])
+
+                        if y != self.height - 1:
+                            if (self.getTile(x, y + 1) == [7]):
+                                self.setTile(x, y, [8])
+                        if y != 0:
+                            if (self.getTile(x, y - 1) == [7]):
+                                self.setTile(x, y, [8])
+                            
+
 
 if __name__ == "__main__": #used for testing
-    maze = MazeArray(4,4,255) 
+    maze = MazeArray(4,4,256) 
     maze.generatePath()
     maze.fillMaze()
+    maze.electricBlue()
     for row in maze.grid:
         print(*row, sep="\t")
     #print(maze.getTile(0,0))
