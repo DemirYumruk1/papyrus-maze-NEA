@@ -30,11 +30,12 @@ def startInstance():
             sprite_path = "Assets/player_normal.png"
         root.destroy()
         instance = Game(width, height, seed, sprite_path)
-        instance.run_game_loop()
-        if ((instance.score < 5 and instance.seconds < 180) and width > 5 and height > 5) or save_file.readline() == "unlocked\n":#don't overwrite pre existing achievement
-            save_file.write(f"unlocked\nLast seed used:{seed}")
-        else:
-            save_file.writelines(f"Last seed used: {seed}")
+        if instance.run_game_loop(): #only save if maze is complete
+            save_file = open("save.txt", "w+")
+            if ((instance.score < 5 and instance.seconds < 180) and width > 5 and height > 5) or save_file.readline() == "unlocked\n":#don't overwrite pre existing achievement
+                save_file.write(f"unlocked\nSeed used:{seed}")
+            else:
+                save_file.write(f"Seed used: {seed}")
         return
 
 if __name__ == "__main__":
@@ -89,5 +90,6 @@ if __name__ == "__main__":
     achievement = save_file.readline() == "unlocked\n"
     if achievement:
         error_label.configure(text="WOWIE! YOU BEAT MY CHALLENGE!", fg ="yellow")
+    save_file.close()
 
     root.mainloop()

@@ -102,7 +102,7 @@ class Game:
                     next_tile = [6]
 
                 #prevent illegal movement
-                if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8]) or (next_tile == [2] and self.Player.getFlavour())):
+                if not ((next_tile == [6]) or (next_tile == [7]) or (next_tile == [8])):
                     self.Player.move(player_direction_y, player_direction_x, self.maze_height -1 , self.maze_width -1)
 
                 #exit slip physics if the end of the maze is found
@@ -151,7 +151,7 @@ class Game:
             player_direction_y = 0
             for event in events:
                 if event.type == pygame.QUIT:
-                    return
+                    return False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         player_direction_y = -1
@@ -176,7 +176,7 @@ class Game:
             move(next_tile)
             
             if next_tile == [0] and self.Player.getXpos() != 0:
-                return
+                return True
             
             next_tile = [1] #reset next tile
             #update display
@@ -186,7 +186,7 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(25, 4, 248342, "Assets/player_normal.png")
+    game = Game(10, 7, 356, "Assets/player_normal.png")
     game.run_game_loop()
     print(game.mazeArray)
 
