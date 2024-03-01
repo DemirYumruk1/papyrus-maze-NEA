@@ -6,11 +6,4 @@ Part of my Computer Science AQA NEA project.
 
 please ignore the commit descriptions 
 
-
-
-
-
-
-
-Not affiliated with Toby Fox (yet)
-if we get 12 subscriber I will ask Epic Games to add the main character (tile_id 2 BLUE) as a fortnite skin
+Credits: Toby Fox for making the concept and making Papyrus and Sans, Fire Emblem Shadow Dragon and the Blade of Light for the BGM
