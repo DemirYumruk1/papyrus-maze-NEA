@@ -38,7 +38,7 @@ class MazeArray:
             return random.choices(range(1,6))
             #return[1]
         elif mode == "filling":
-            return random.choices(range(1,8), weights=(0.1, 0.1, 0.1, 0.1, 0.15, 0.2, 0.2))
+            return random.choices(range(1,8), weights=(0.1, 0.1, 0.1, 0.1, 0.15, 0.3, 0.3))
             #return ["#"]
         else:
             return random.choices([1, 3, 4, 5])
@@ -67,8 +67,8 @@ class MazeArray:
                 axis = random.choice(["x", "x", "y"])
             elif lastTile == [2]:
                 for i in (-1, 1):
-                    self.setTile(x + i, y, self.chooseTile("safe"))
-                    self.setTile(x, y + i, self.chooseTile("safe"))
+                    self.setTile(x + i, y, self.chooseTile(""))
+                    self.setTile(x, y + i, self.chooseTile(""))
             if axis == "x":
                 direction = random.choice([-1, -1, 1, 1, 1])    #weighting the algorithm to the right to be less prone to walking into itself
                 if x == 0:

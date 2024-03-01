@@ -3,7 +3,7 @@ import time
 from mazearray import MazeArray
 from player import Player
 class Game:
-    def __init__(self, maze_width, maze_height, seed):
+    def __init__(self, maze_width, maze_height, seed, sprite_path):
         pygame.init()
         self.seed = seed
         self.maze = MazeArray(maze_width, maze_height, seed)
@@ -31,7 +31,7 @@ class Game:
         self.game_window = pygame.display.set_mode((self.window_width, self.window_height + 100)) #+100 gives headroom for GUI
 
         #the player's sprite must also be proportional to the tile size
-        self.Player = Player(0, round(maze_height/2), "Assets/player_normal.png", self.tile_width)
+        self.Player = Player(0, round(maze_height/2), sprite_path, self.tile_width)
 
         self.seconds = 0 #goes up every second (100 ticks)
         self.score = 0 #goes up every time a green tile is pressed
@@ -53,7 +53,7 @@ class Game:
                 colour = self.tile_id[tile[0]] #tile[0], because the tile itself contains a list ([1] instead of 1)
                 pygame.draw.rect(self.game_window, colour, (i * self.tile_width, j * self.tile_width, self.tile_width, self.tile_width))
         self.game_window.blit(self.Player.sprite, (player_displayed_pos_x, player_displayed_pos_y))
-        self.game_window.blit(self.score_disp, (5, self.window_height + 50))
+        self.game_window.blit((self.GUIfont.render(f"score: {self.score}", True, (0,0,0))), (5, self.window_height + 90))
 
         pygame.display.update()
 
@@ -168,7 +168,7 @@ class Game:
             clock.tick(10)
 
 if __name__ == "__main__":
-    game = Game(4, 4, 248342)
+    game = Game(25, 4, 248342, "Assets/player_normal.png")
     game.run_game_loop()
     print(game.mazeArray)
 
