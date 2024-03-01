@@ -5,6 +5,7 @@ from player import Player
 class Game:
     def __init__(self, maze_width, maze_height, seed, sprite_path):
         pygame.init()
+        pygame.font.init()
         self.seed = seed
         self.maze = MazeArray(maze_width, maze_height, seed)
         self.maze_width = maze_width + 1 #room for the goal tiles
@@ -36,9 +37,9 @@ class Game:
         self.seconds = 0 #goes up every second (100 ticks)
         self.score = 0 #goes up every time a green tile is pressed
 
-        self.GUIfont = pygame.font.SysFont("comicsansms", 72)
-        self.score_disp = self.GUIfont.render(f"score: {self.score}", True, (0,0,0))
-        self.timer_disp = self.GUIfont.render(f"time: {(self.seconds//60):02}m:{(self.seconds % 60):02}", True, (0,0,0))
+        self.GUIfont = pygame.font.SysFont("Comic Sans MS", 30)
+        
+        
 
 
     def draw(self):
@@ -53,8 +54,18 @@ class Game:
                 colour = self.tile_id[tile[0]] #tile[0], because the tile itself contains a list ([1] instead of 1)
                 pygame.draw.rect(self.game_window, colour, (i * self.tile_width, j * self.tile_width, self.tile_width, self.tile_width))
         self.game_window.blit(self.Player.sprite, (player_displayed_pos_x, player_displayed_pos_y))
-        self.game_window.blit((self.GUIfont.render(f"score: {self.score}", True, (0,0,0))), (5, self.window_height + 90))
 
+        score_disp = self.GUIfont.render(f"score: {self.score}", True, (255,255,255))
+        self.game_window.blit(score_disp, (5, self.window_height - 8))
+
+        timer_disp = self.GUIfont.render(f"time: {int(self.seconds // 60):02}m {(round(self.seconds) % 60):02}s", True, (255,255,255))
+        self.game_window.blit(timer_disp, (5, self.window_height+ 20))
+
+        if self.Player.getFlavour() == True:
+            flavour_disp = self.GUIfont.render(f"you smell like oranges.", True, (255,165,0))
+        else:
+            flavour_disp = self.GUIfont.render(f"you smell like lemons.", True, (255,255,0))
+        self.game_window.blit(flavour_disp, (5, self.window_height + 48))
         pygame.display.update()
 
     def check_tile(self, dir_x, dir_y):
@@ -97,6 +108,13 @@ class Game:
                 #exit slip physics if the end of the maze is found
                 if next_tile == [0]:
                     return 
+                
+                if (next_tile == [3]):
+                        self.score += 1
+                        print(self.score)
+                
+                if next_tile == [4]: #change flavour to orange when pressing orange tile
+                    self.Player.setFlavour(True)
 
                 #move twice if tile ahead is purple (this caused me so much pain)
                 elif next_tile == [5]: 

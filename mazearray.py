@@ -38,7 +38,7 @@ class MazeArray:
             return random.choices(range(1,6))
             #return[1]
         elif mode == "filling":
-            return random.choices(range(1,8), weights=(0.1, 0.1, 0.1, 0.1, 0.15, 0.3, 0.3))
+            return random.choices(range(1,8), weights=(0.05, 0.1, 0.1, 0.1, 0.15, 0.3, 0.3))
             #return ["#"]
         else:
             return random.choices([1, 3, 4, 5])
