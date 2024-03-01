@@ -35,7 +35,6 @@ def startInstance():
             save_file.write(f"unlocked\nLast seed used:{seed}")
         else:
             save_file.writelines(f"Last seed used: {seed}")
-        root.destroy()
         return
 
 if __name__ == "__main__":
